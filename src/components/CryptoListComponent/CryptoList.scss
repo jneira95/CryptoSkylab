@@ -1,6 +1,5 @@
 $negativeValue: rgb(253, 66, 60);
 $positiveValue: rgb(138, 235, 59);
-$positivaeValue:;
 
 .negative {
 	color: $negativeValue;
@@ -8,4 +7,8 @@ $positivaeValue:;
 
 .positive {
 	color: $positiveValue;
+}
+
+.logo-crytolist-image > img {
+	width: 30px;
 }

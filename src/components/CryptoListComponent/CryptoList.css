@@ -5,4 +5,8 @@
 .positive {
   color: #8aeb3b;
 }
+
+.logo-crytolist-image > img {
+  width: 30px;
+}
 /*# sourceMappingURL=CryptoList.css.map */

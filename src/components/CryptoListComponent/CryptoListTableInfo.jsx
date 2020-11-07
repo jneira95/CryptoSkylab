@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Sparklines, SparklinesLine, SparklinesSpots } from 'react-sparklines';
 
 function CryptoListTableInfo({ data }) {
-	debugger;
+	const [checked, setChecked] = useState(false);
+
 	const currentTableData = {
 		id: data.id ? data.id : 'N/A',
 		rank: data.market_cap_rank ? data.market_cap_rank : 'N/A',
@@ -30,8 +31,13 @@ function CryptoListTableInfo({ data }) {
 	return (
 		<>
 			<tr key={currentTableData.id}>
-				<td>{currentTableData.rank}</td>
 				<td>
+					<form>
+						<input type="checkbox" />
+					</form>
+				</td>
+				<td>{currentTableData.rank}</td>
+				<td className="logo-crytolist-image">
 					<img src={currentTableData.image} alt="crypto-logo" />
 					{`${currentTableData.name} ${currentTableData.symbol}`}
 				</td>

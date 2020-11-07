@@ -3,7 +3,18 @@ import './CryptoList.css';
 import { loadCoinsList } from '../../actions/action-creator';
 import cryptoStore from '../../stores/crypto-store';
 import CryptoListTableInfo from './CryptoListTableInfo';
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+const useStyles = makeStyles((theme) => ({
+	margin: {
+		margin: theme.spacing(1)
+	},
+	extendedIcon: {
+		marginRight: theme.spacing(2)
+	}
+}));
 function CryptoList() {
+	const classes = useStyles();
 	const [cryptoList, setCryptoList] = useState(null);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [currentItemsPerPage] = useState(25);
@@ -26,6 +37,7 @@ function CryptoList() {
 						<caption>Today's Cryptocurrency Prices by Market Cap</caption>
 						<thead>
 							<tr>
+								<th>Watchlist</th>
 								<th>#</th>
 								<th>Name</th>
 								<th>Price</th>
@@ -46,36 +58,42 @@ function CryptoList() {
 							})}
 						</tbody>
 					</table>
-					<button
+					<Button
+						size="small"
+						variant="contained"
+						color="primary"
 						type="button"
-						onClick={() => {
+						onClick={async () => {
 							if (currentPage > 1) {
-								loadCoinsList(currentItemsPerPage, currentPage - 1);
+								await loadCoinsList(currentItemsPerPage, currentPage - 1);
 								setCurrentPage(currentPage - 1);
 								document.documentElement.scrollTop = 0;
 							}
 						}}
 					>
 						{`<`}
-					</button>
-					<button
+					</Button>
+					<Button
+						className={classes.margin}
+						size="small"
+						variant="contained"
+						color="primary"
 						type="button"
-						onClick={() => {
-							loadCoinsList(currentItemsPerPage, currentPage + 1);
+						onClick={async () => {
+							await loadCoinsList(currentItemsPerPage, currentPage + 1);
 							setCurrentPage(currentPage + 1);
 							document.documentElement.scrollTop = 0;
 						}}
 					>
 						{`>`}
-					</button>
+					</Button>
 
 					<form>
 						<select
 							name="items"
 							id="itemstoshow"
-							onChange={(event) => {
-								debugger;
-								loadCoinsList(event.target.value, currentPage);
+							onChange={async (event) => {
+								await loadCoinsList(event.target.value, currentPage);
 								console.log(event.target.value);
 								document.documentElement.scrollTop = 0;
 							}}
