@@ -25,12 +25,14 @@ function CryptoListTableInfo({ data }) {
 				<td>{`${currentTableData.currentPrice}€`}</td>
 				<td>{currentTableData.market24h}</td>
 				<td>
-					<Sparklines data={currentTableData.sparkline} height={80}>
-						<SparklinesLine
-							style={{ stroke: '#d1192e', strokeWidth: '2', fill: 'none' }}
-						/>
-						<SparklinesSpots />
-					</Sparklines>
+					<span>
+						<Sparklines data={currentTableData.sparkline} height={80}>
+							<SparklinesLine
+								style={{ stroke: '#d1192e', strokeWidth: '2', fill: 'none' }}
+							/>
+							<SparklinesSpots />
+						</Sparklines>
+					</span>
 				</td>
 				<td>pruebas</td>
 				<td>{`${currentTableData.circulatingSupply} ${currentTableData.symbol}`}</td>
@@ -40,3 +42,5 @@ function CryptoListTableInfo({ data }) {
 }
 
 export default CryptoListTableInfo;
+
+
