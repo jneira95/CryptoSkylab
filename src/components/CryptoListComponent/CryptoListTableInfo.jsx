@@ -1,4 +1,5 @@
 import React from 'react';
+import { Sparklines, SparklinesLine, SparklinesSpots } from 'react-sparklines';
 
 function CryptoListTableInfo({ data }) {
 	const currentTableData = {
@@ -9,6 +10,7 @@ function CryptoListTableInfo({ data }) {
 		image: data.image,
 		currentPrice: data.current_price.toLocaleString(),
 		market24h: data.market_cap_change_percentage_24h.toFixed(2),
+		sparkline: data.sparkline_in_7d.price,
 		circulatingSupply: data.circulating_supply.toLocaleString()
 	};
 
@@ -22,7 +24,14 @@ function CryptoListTableInfo({ data }) {
 				</td>
 				<td>{`${currentTableData.currentPrice}€`}</td>
 				<td>{currentTableData.market24h}</td>
-				<td>pruebas</td>
+				<td>
+					<Sparklines data={currentTableData.sparkline} height={80}>
+						<SparklinesLine
+							style={{ stroke: '#d1192e', strokeWidth: '2', fill: 'none' }}
+						/>
+						<SparklinesSpots />
+					</Sparklines>
+				</td>
 				<td>pruebas</td>
 				<td>{`${currentTableData.circulatingSupply} ${currentTableData.symbol}`}</td>
 			</tr>

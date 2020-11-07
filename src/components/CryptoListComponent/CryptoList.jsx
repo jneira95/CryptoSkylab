@@ -29,7 +29,7 @@ function CryptoList() {
 								<th>Name</th>
 								<th>Price</th>
 								<th>24h</th>
-								<th>7d</th>
+								<th>Last 7 Days</th>
 								<th>Market Cap</th>
 								<th>Circulating Supply</th>
 							</tr>
