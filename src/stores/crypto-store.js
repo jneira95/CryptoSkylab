@@ -34,7 +34,6 @@ dispatcher.register((action) => {
 			currentServerData.cryptoCurrenciesList = action.payload;
 			cryptoStore.emitChange();
 			break;
-
 		default:
 			break;
 	}
