@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAIA,AAAA,SAAS,CAAC;EACT,KAAK,EALU,OAAgB;CAM/B;;AAED,AAAA,SAAS,CAAC;EACT,KAAK,EARU,OAAiB;CAShC",
+    "sources": [
+        "CryptoList.scss"
+    ],
+    "names": [],
+    "file": "CryptoList.css"
+}

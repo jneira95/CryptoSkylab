@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import cryptoStore from '../../stores/crypto-store';
+import './CryptoList.css';
 import { loadCoinsList } from '../../actions/action-creator';
+import cryptoStore from '../../stores/crypto-store';
 import CryptoListTableInfo from './CryptoListTableInfo';
 function CryptoList() {
 	const [cryptoList, setCryptoList] = useState(null);
@@ -48,37 +49,40 @@ function CryptoList() {
 					<button
 						type="button"
 						onClick={() => {
-							loadCoinsList(currentItemsPerPage, currentPage + 1);
-							setCurrentPage(currentPage + 1);
+							if (currentPage > 1) {
+								loadCoinsList(currentItemsPerPage, currentPage - 1);
+								setCurrentPage(currentPage - 1);
+								document.documentElement.scrollTop = 0;
+							}
 						}}
 					>
-						next
+						{`<`}
 					</button>
 					<button
 						type="button"
 						onClick={() => {
-							console.log(currentPage);
-							if (currentPage > 1) {
-								loadCoinsList(currentItemsPerPage, currentPage - 1);
-								setCurrentPage(currentPage - 1);
-							}
-							console.log(`--->${currentPage}`);
+							loadCoinsList(currentItemsPerPage, currentPage + 1);
+							setCurrentPage(currentPage + 1);
+							document.documentElement.scrollTop = 0;
 						}}
 					>
-						previous
+						{`>`}
 					</button>
+
 					<form>
 						<select
 							name="items"
 							id="itemstoshow"
 							onChange={(event) => {
+								debugger;
 								loadCoinsList(event.target.value, currentPage);
 								console.log(event.target.value);
+								document.documentElement.scrollTop = 0;
 							}}
 						>
-							<option value={25}>25</option>
-							<option value={50}>50</option>
 							<option value={100}>100</option>
+							<option value={50}>50</option>
+							<option value={25}>25</option>
 						</select>
 					</form>
 				</section>
