@@ -51,7 +51,6 @@ dispatcher.register((action) => {
 			cryptoStore.emitChange();
 			break;
 		case actionTypes.ERROR_LOADING_DATA:
-			currentServerData.cryptoCurrenciesList = action.payload;
 			cryptoStore.emitChange();
 			break;
 		case actionTypes.ADD_TO_FAVORITE_LIST:
