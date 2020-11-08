@@ -1,8 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Sparklines, SparklinesLine, SparklinesSpots } from 'react-sparklines';
+import { withStyles } from '@material-ui/core/styles';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 function CryptoListTableInfo({ data }) {
-	const [checked, setChecked] = useState(false);
+	const BorderLinearProgress = withStyles((theme) => ({
+		root: {
+			marginTop: 2,
+			height: 6,
+			borderRadius: 5
+		},
+		colorPrimary: {
+			backgroundColor:
+				theme.palette.grey[theme.palette.type === '#37465B' ? 100 : 600]
+		},
+		bar: {
+			backgroundColor: '#08C6AB'
+		}
+	}))(LinearProgress);
 
 	const currentTableData = {
 		id: data.id ? data.id : 'N/A',
@@ -26,20 +41,29 @@ function CryptoListTableInfo({ data }) {
 			? [...data.sparkline_in_7d.price]
 			: [1, 1, 1, 1, 1, 1, 1],
 		marketCap: data.market_cap ? `€${data.market_cap.toLocaleString()}` : 'N/A',
-		circulatingSupply: data.circulating_supply.toLocaleString()
+		circulatingSupply: data.circulating_supply.toLocaleString(),
+		circulatingSupplyStatusBar: function () {
+			return Math.round(
+				(Math.round(data.circulating_supply) / Math.round(data.total_supply)) *
+					100
+			);
+		}
 	};
+
 	return (
 		<>
-			<tr key={currentTableData.id}>
+			<tr className="list-table-row" key={currentTableData.id}>
 				<td>
 					<form>
 						<input type="checkbox" />
 					</form>
 				</td>
 				<td>{currentTableData.rank}</td>
-				<td className="logo-crytolist-image">
-					<img src={currentTableData.image} alt="crypto-logo" />
-					{`${currentTableData.name} ${currentTableData.symbol}`}
+				<td>
+					<div className="logo-crytolist-image">
+						<img src={currentTableData.image} alt="crypto-logo" />
+						{`${currentTableData.name} ${currentTableData.symbol}`}
+					</div>
 				</td>
 				<td>{currentTableData.currentPrice}</td>
 				<td className={currentTableData.market24hValueColor}>
@@ -50,7 +74,7 @@ function CryptoListTableInfo({ data }) {
 						<Sparklines data={currentTableData.sparkline} height={80}>
 							<SparklinesLine
 								style={{
-									stroke: '#0a66cf',
+									stroke: '#5AFFE7',
 									strokeWidth: '2',
 									fill: 'none'
 								}}
@@ -60,7 +84,15 @@ function CryptoListTableInfo({ data }) {
 					</span>
 				</td>
 				<td>{currentTableData.marketCap}</td>
-				<td>{`${currentTableData.circulatingSupply} ${currentTableData.symbol}`}</td>
+				<td>
+					{`${currentTableData.circulatingSupply} ${currentTableData.symbol}`}
+					{currentTableData.circulatingSupplyStatusBar() < 100 && (
+						<BorderLinearProgress
+							variant="determinate"
+							value={Number(currentTableData.circulatingSupplyStatusBar())}
+						/>
+					)}
+				</td>
 			</tr>
 		</>
 	);
