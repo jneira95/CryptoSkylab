@@ -1,41 +1,46 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './CryptoList.css';
 import { loadCoinsList } from '../../actions/action-creator';
 import cryptoStore from '../../stores/crypto-store';
 import CryptoListTableInfo from './CryptoListTableInfo';
 import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import NativeSelect from '@material-ui/core/NativeSelect';
+import TablePagination from '@material-ui/core/TablePagination';
 
 const useStyles = makeStyles((theme) => ({
-	margin: {
-		margin: theme.spacing(1)
-	},
-	extendedIcon: {
-		marginRight: theme.spacing(2)
-	},
-	formControl: {
-		margin: theme.spacing(1),
-		minWidth: 50
-	},
-	selectEmpty: {
-		marginTop: theme.spacing(2)
+	table: {
+		color: theme.palette.primary.contrastText
 	}
 }));
+
 function CryptoList() {
 	const classes = useStyles();
+	const showRows = useRef([25, 50, 100]);
 	const [cryptoList, setCryptoList] = useState(null);
 	const [currentPage, setCurrentPage] = useState(1);
+	const [pageCount, setPageCount] = useState(0);
 	const [currentItemsPerPage, setCurrentItemsPerPage] = useState(25);
 
-	function handleChange() {
-		setCryptoList(cryptoStore.getCryptoList);
-	}
+	const handleChangePage = async (event, newPage) => {
+		event.type === 'click' &&
+			(await loadCoinsList(currentItemsPerPage, newPage + 1));
+		setCurrentPage(newPage + 1);
+		setPageCount(newPage);
+	};
+	console.log('algo');
+
+	const handleChangeRowsPerPage = async (event) => {
+		await loadCoinsList(event.target.value, currentPage);
+		setCurrentItemsPerPage(event.target.value);
+	};
+
 	useEffect(() => {
+		document.body.scrollTop = 0;
+		document.documentElement.scrollTop = 0;
+		function handleChange() {
+			setCryptoList(cryptoStore.getCryptoList());
+		}
 		cryptoStore.addEventListener(handleChange);
-		!cryptoList && loadCoinsList();
+		!cryptoList && loadCoinsList(currentItemsPerPage, currentPage);
 		return () => {
 			cryptoStore.removeEventListener(handleChange);
 		};
@@ -72,55 +77,19 @@ function CryptoList() {
 							})}
 						</tbody>
 					</table>
-					<Button
-						size="small"
-						variant="contained"
-						color="primary"
-						type="button"
-						onClick={async () => {
-							if (currentPage > 1) {
-								await loadCoinsList(currentItemsPerPage, currentPage - 1);
-								setCurrentPage(currentPage - 1);
-								document.body.scrollTop = 0;
-								document.documentElement.scrollTop = 0;
-							}
-						}}
-					>
-						{`<`}
-					</Button>
-					<Button
-						className={classes.margin}
-						size="small"
-						variant="contained"
-						color="primary"
-						type="button"
-						onClick={async () => {
-							await loadCoinsList(currentItemsPerPage, currentPage + 1);
-							setCurrentPage(currentPage + 1);
-							document.body.scrollTop = 0;
-							document.documentElement.scrollTop = 0;
-						}}
-					>
-						{`>`}
-					</Button>
-					<FormControl className={classes.formControl}>
-						<NativeSelect
-							className={classes.selectEmpty}
-							onChange={async (event) => {
-								if (event.target.value) {
-								}
-								await loadCoinsList(event.target.value, currentPage);
-								setCurrentItemsPerPage(event.target.value);
-								document.body.scrollTop = 0;
-								document.documentElement.scrollTop = 0;
-							}}
-						>
-							<option value={25}>25</option>
-							<option value={50}>50</option>
-							<option value={100}>100</option>
-						</NativeSelect>
-						<FormHelperText>Show rows</FormHelperText>
-					</FormControl>
+					<section className="pagination">
+						<TablePagination
+							className={classes.table}
+							component="div"
+							count={1000}
+							page={pageCount}
+							labelRowsPerPage={'Show rows'}
+							rowsPerPageOptions={showRows.current}
+							rowsPerPage={currentItemsPerPage}
+							onChangePage={handleChangePage}
+							onChangeRowsPerPage={handleChangeRowsPerPage}
+						/>
+					</section>
 				</section>
 			)}
 		</>

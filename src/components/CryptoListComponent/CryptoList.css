@@ -206,4 +206,23 @@
 .list-wrapper .list-table .list-table-row:hover {
   background-color: #171924;
 }
+
+.list-wrapper .pagination {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.list-wrapper .pagination .pagination-selector {
+  position: absolute;
+  right: 100px;
+}
+
+.test {
+  color: white;
+}
 /*# sourceMappingURL=CryptoList.css.map */

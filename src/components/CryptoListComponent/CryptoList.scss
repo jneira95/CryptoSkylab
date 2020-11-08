@@ -98,9 +98,23 @@ $positiveValue: rgb(138, 235, 59);
 				}
 			}
 		}
-
 		.list-table-row:hover {
 			background-color: #171924;
 		}
 	}
+	.pagination {
+		position: relative;
+		display: flex;
+		justify-content: center;
+		.pagination-buttons {
+		}
+		.pagination-selector {
+			position: absolute;
+			right: 100px;
+		}
+	}
+}
+
+.test {
+	color: white;
 }
