@@ -106,7 +106,7 @@
 }
 
 .list-wrapper .list-table .list-table-heading tr th:nth-child(7) {
-  width: 200px;
+  width: 170px;
 }
 
 .list-wrapper .list-table .list-table-heading tr th:nth-child(8) {
@@ -181,19 +181,15 @@
   margin: 0;
 }
 
-.list-wrapper .list-table .list-table-body .list-table-row:hover {
-  background-color: #171924;
-}
-
-.list-wrapper .negative {
+.list-wrapper .list-table .list-table-body .list-table-row .negative {
   color: #fd423c;
 }
 
-.list-wrapper .positive {
+.list-wrapper .list-table .list-table-body .list-table-row .positive {
   color: #8aeb3b;
 }
 
-.list-wrapper .logo-crytolist-image {
+.list-wrapper .list-table .list-table-body .list-table-row .logo-crytolist-image {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -202,8 +198,12 @@
           align-items: center;
 }
 
-.list-wrapper .logo-crytolist-image > img {
+.list-wrapper .list-table .list-table-body .list-table-row .logo-crytolist-image > img {
   width: 30px;
   margin: 0 10px;
+}
+
+.list-wrapper .list-table .list-table-row:hover {
+  background-color: #171924;
 }
 /*# sourceMappingURL=CryptoList.css.map */
