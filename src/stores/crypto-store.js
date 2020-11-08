@@ -5,12 +5,28 @@ import actionTypes from '../actions/action-types';
 const CHANGE = 'CHANGE';
 
 const currentServerData = {
-	cryptoCurrenciesList: null
+	cryptoCurrenciesList: null,
+	favoriteCurrenciesList: []
 };
 
 class CryptoStore extends EventEmitter {
 	getCryptoList() {
 		return currentServerData.cryptoCurrenciesList;
+	}
+
+	getFavoriteCurrencies() {
+		return currentServerData.favoriteCurrenciesList;
+	}
+
+	addToFavorite(currency) {
+		currentServerData.favoriteCurrenciesList.push(currency);
+	}
+
+	removeFromFavorite(currency) {
+		const deleteCurrency = currentServerData.favoriteCurrenciesList.filter(
+			(cryptoCurrency) => cryptoCurrency.id !== currency
+		);
+		return deleteCurrency;
 	}
 
 	addEventListener(callback) {
@@ -36,6 +52,16 @@ dispatcher.register((action) => {
 			break;
 		case actionTypes.ERROR_LOADING_DATA:
 			currentServerData.cryptoCurrenciesList = action.payload;
+			cryptoStore.emitChange();
+			break;
+		case actionTypes.ADD_TO_FAVORITE_LIST:
+			cryptoStore.addToFavorite(action.payload);
+			cryptoStore.emitChange();
+			break;
+		case actionTypes.REMOVE_FROM_FAVORITE_LIST:
+			currentServerData.favoriteCurrenciesList = cryptoStore.removeFromFavorite(
+				action.payload
+			);
 			cryptoStore.emitChange();
 			break;
 		default:

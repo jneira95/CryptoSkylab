@@ -19,15 +19,20 @@ function CryptoList() {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [pageCount, setPageCount] = useState(0);
 	const [currentItemsPerPage, setCurrentItemsPerPage] = useState(25);
+	const [checkbox, setCheckbox] = useState(false);
+	const [favoriteCurrencies, setFavoriteCurrencies] = useState(
+		cryptoStore.getFavoriteCurrencies
+	);
 
+	const handleChangeFavorite = () => {
+		setFavoriteCurrencies(cryptoStore.getFavoriteCurrencies);
+	};
 	const handleChangePage = async (event, newPage) => {
 		event.type === 'click' &&
 			(await loadCoinsList(currentItemsPerPage, newPage + 1));
 		setCurrentPage(newPage + 1);
 		setPageCount(newPage);
 	};
-	console.log('algo');
-
 	const handleChangeRowsPerPage = async (event) => {
 		await loadCoinsList(event.target.value, currentPage);
 		setCurrentItemsPerPage(event.target.value);
@@ -44,7 +49,7 @@ function CryptoList() {
 		return () => {
 			cryptoStore.removeEventListener(handleChange);
 		};
-	}, [cryptoList, currentPage, currentItemsPerPage]);
+	}, [cryptoList, currentPage, currentItemsPerPage, favoriteCurrencies]);
 
 	return (
 		<>
@@ -56,7 +61,21 @@ function CryptoList() {
 						</caption>
 						<thead className="list-table-heading">
 							<tr>
-								<th></th>
+								<th>
+									<form>
+										<input
+											type="checkbox"
+											onChange={() => {
+												if (!checkbox) {
+													handleChangeFavorite();
+													setCheckbox(true);
+												} else {
+													setCheckbox(false);
+												}
+											}}
+										/>
+									</form>
+								</th>
 								<th>#</th>
 								<th>Name</th>
 								<th>Price</th>
@@ -67,28 +86,57 @@ function CryptoList() {
 							</tr>
 						</thead>
 						<tbody className="list-table-body">
-							{cryptoList.map((cryptoCoinData) => {
-								return (
-									<CryptoListTableInfo
-										data={cryptoCoinData}
-										key={cryptoCoinData.id}
-									/>
-								);
-							})}
+							{!checkbox ? (
+								cryptoList.map((cryptoCoinData) => {
+									return (
+										<CryptoListTableInfo
+											data={cryptoCoinData}
+											key={cryptoCoinData.id}
+										/>
+									);
+								})
+							) : checkbox && favoriteCurrencies.length > 0 ? (
+								favoriteCurrencies.map((cryptoCoinData) => {
+									return (
+										<CryptoListTableInfo
+											data={cryptoCoinData}
+											onChange={() => {
+												setFavoriteCurrencies(
+													cryptoStore.getFavoriteCurrencies
+												);
+											}}
+											key={cryptoCoinData.id}
+										/>
+									);
+								})
+							) : (
+								<tr>
+									<td>N/A</td>
+									<td>N/A</td>
+									<td>N/A</td>
+									<td>N/A</td>
+									<td>N/A</td>
+									<td>N/A</td>
+									<td>N/A</td>
+									<td>N/A</td>
+								</tr>
+							)}
 						</tbody>
 					</table>
 					<section className="pagination">
-						<TablePagination
-							className={classes.table}
-							component="div"
-							count={1000}
-							page={pageCount}
-							labelRowsPerPage={'Show rows'}
-							rowsPerPageOptions={showRows.current}
-							rowsPerPage={currentItemsPerPage}
-							onChangePage={handleChangePage}
-							onChangeRowsPerPage={handleChangeRowsPerPage}
-						/>
+						{!checkbox && (
+							<TablePagination
+								className={classes.table}
+								component="div"
+								count={1000}
+								page={pageCount}
+								labelRowsPerPage={'Show rows'}
+								rowsPerPageOptions={showRows.current}
+								rowsPerPage={currentItemsPerPage}
+								onChangePage={handleChangePage}
+								onChangeRowsPerPage={handleChangeRowsPerPage}
+							/>
+						)}
 					</section>
 				</section>
 			)}

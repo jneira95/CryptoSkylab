@@ -18,3 +18,17 @@ export async function loadCoinsList(per_page, page) {
 		});
 	}
 }
+
+export function saveOnFavoriteList(currencyData) {
+	dispatcher.dispatch({
+		type: actionTypes.ADD_TO_FAVORITE_LIST,
+		payload: currencyData
+	});
+}
+
+export function removeFromFavoriteList(currencyId) {
+	dispatcher.dispatch({
+		type: actionTypes.REMOVE_FROM_FAVORITE_LIST,
+		payload: currencyId
+	});
+}

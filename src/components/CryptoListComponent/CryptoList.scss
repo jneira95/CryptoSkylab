@@ -2,6 +2,7 @@ $negativeValue: rgb(253, 66, 60);
 $positiveValue: rgb(138, 235, 59);
 
 .list-wrapper {
+	padding: 5vw;
 	.list-table {
 		background-color: #17171a;
 		border-collapse: collapse;
@@ -48,7 +49,7 @@ $positiveValue: rgb(138, 235, 59);
 					width: 220px;
 				}
 				th:nth-child(7) {
-					width: 170px;
+					width: 130px;
 				}
 				th:nth-child(8) {
 					width: 200px;
@@ -107,6 +108,7 @@ $positiveValue: rgb(138, 235, 59);
 		display: flex;
 		justify-content: center;
 		.pagination-buttons {
+			font-size: 2rem;
 		}
 		.pagination-selector {
 			position: absolute;
