@@ -3,7 +3,7 @@ import CryptoList from '../CryptoList';
 import { act } from 'react-dom/test-utils';
 import { render, unmountComponentAtNode } from 'react-dom';
 
-describe('Crypto List component', () => {
+xdescribe('Crypto List component', () => {
 	let container;
 	beforeEach(() => {
 		container = document.createElement('div');
@@ -23,3 +23,4 @@ describe('Crypto List component', () => {
 		expect(container).toBeInTheDocument();
 	});
 });
+

@@ -28,7 +28,7 @@ describe('Crypto List component', () => {
 		//assert
 		expect(container).toBeInTheDocument();
 	});
-	test('should be defined at the a', () => {
+	test('tr element should be defined', () => {
 		//arrange
 		const currentTableData = {
 			id: 'bitcoin',
@@ -52,6 +52,5 @@ describe('Crypto List component', () => {
 		});
 		//assert
 		expect(container.querySelector('tr')).toBeDefined();
-		expect(container.querySelector('td').textContent).toBe('bitcoin');
 	});
 });

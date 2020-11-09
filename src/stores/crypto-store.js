@@ -6,10 +6,21 @@ const CHANGE = 'CHANGE';
 
 const currentServerData = {
 	cryptoCurrenciesList: null,
-	favoriteCurrenciesList: []
+	favoriteCurrenciesList: [],
+	error: ''
 };
 
 class CryptoStore extends EventEmitter {
+	setDefaulSettings() {
+		currentServerData.cryptoCurrenciesList = null;
+		currentServerData.favoriteCurrenciesList = [];
+		currentServerData.error = '';
+	}
+
+	getErrorLoading() {
+		return currentServerData.error
+	}
+
 	getCryptoList() {
 		return currentServerData.cryptoCurrenciesList;
 	}
@@ -51,6 +62,7 @@ dispatcher.register((action) => {
 			cryptoStore.emitChange();
 			break;
 		case actionTypes.ERROR_LOADING_DATA:
+			currentServerData.error = 'ERROR LOADING'
 			cryptoStore.emitChange();
 			break;
 		case actionTypes.ADD_TO_FAVORITE_LIST:
