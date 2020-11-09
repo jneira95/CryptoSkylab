@@ -46,7 +46,9 @@
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}",
-      "!src/index.js"
+      "!src/index.js",
+      "!src/components/CryptoList.jsx",
+      "!src/.scannerwork/css-bundle/lib/src/server.d.ts"
     ]
   }
 }
