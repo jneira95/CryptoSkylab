@@ -22,7 +22,7 @@ const BorderLinearProgress = withStyles((theme) => ({
 	}
 }))(LinearProgress);
 
-function CryptoListTableInfo({ data, onChange }) {
+function CryptoListTableInfo({ data }) {
 	const [checkbox, setCheckbox] = useState(false);
 	const currentTableData = {
 		id: data.id ? data.id : 'N/A',

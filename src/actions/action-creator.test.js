@@ -1,4 +1,3 @@
-import { ContactSupportOutlined } from '@material-ui/icons';
 import axios from 'axios';
 import dispatcher from '../dispatcher/dispatcher';
 import {
@@ -11,7 +10,7 @@ jest.mock('axios');
 jest.mock('../dispatcher/dispatcher');
 
 describe('Test ActionCreator file', () => {
-	test('Should return array of currencies', async () => {
+	test('Should return array of currencies loadCoinsList', async () => {
 		//arrange
 		axios.mockImplementationOnce(() =>
 			Promise.resolve({
@@ -25,8 +24,12 @@ describe('Test ActionCreator file', () => {
 		);
 		//act
 		await loadCoinsList(4, 1);
-		console.log(axios.mock.calls[0][0]);
+		console.log(axios.mock.calls);
 		//assert
-		expect(axios.mock.calls[1][0]).toBe(1);
+		// expect(axios.mock.calls[0][0]).toBe(
+		// 	'https://api.coingecko.com/api/v3/coins/markets?vs_currency=eur&order=market_cap_desc&per_page=4&page=1&sparkline=true&price_change_percentage=1h%2C24h%'
+		// );
 	});
+
+	xtest('saveOnFavoriteList', () => {});
 });
